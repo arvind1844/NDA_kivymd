@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Color,Line
 from kivy.core.image import Image as CoreImage
 import mysql.connector
-import otp
+# import otp
 
 
 Window.size= (550,600) # This sets the default screen size of the application
@@ -306,9 +306,9 @@ class Main(MDApp):
         self.screen.get_screen('sign').ids.signature.canvas.clear()
         
 
-    def send_otp(self):
-        self.Email = self.screen.get_screen('personal').ids.email_text.text
-        otp.generate_otp(self.Email)
+    # def send_otp(self):
+    #     self.Email = self.screen.get_screen('personal').ids.email_text.text
+    #     otp.generate_otp(self.Email)
 
 
     def finish(self):

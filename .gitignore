@@ -4,9 +4,4 @@
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
 # Additional folders to ignore
-Lib/
-Scripts/
-include/
-pyvenv.cfg
-share/
-include/
+venv/
