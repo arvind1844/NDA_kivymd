@@ -4,4 +4,6 @@
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
 # Additional folders to ignore
+
+
 venv/

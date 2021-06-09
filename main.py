@@ -9,7 +9,7 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Color,Line
 from kivy.core.image import Image as CoreImage
 import mysql.connector
-# import otp
+import gmail_otp
 
 
 Window.size= (550,600) # This sets the default screen size of the application
@@ -230,11 +230,12 @@ class SignatureScreen(Screen):
 
 """Sign class that contains methods which allow user to sign on the screen"""   
 class Sign(Widget):
-    
+    count = 0
     def on_touch_down(self,touch):
         with self.canvas:
             Color(1,0,0)
             touch.ud['line'] = Line(points=(touch.x, touch.y))
+            self.count += 1
 
     def on_touch_move(self,touch):
         touch.ud['line'].points += [touch.x,touch.y]
@@ -295,28 +296,28 @@ class Main(MDApp):
     def close(self,obj):
         self.dialog.dismiss()
 
-    def show_date(self):
-        date_dialog = MDDatePicker(callback= self.get_date)
-        date_dialog.open()
-    def get_date(self,date):
-        self.today = date
-        self.screen.get_screen('nda').ids.date_pick.text = str(self.today)
+    # def show_date(self):
+    #     date_dialog = MDDatePicker(callback= self.get_date)
+    #     date_dialog.open()
+    # def get_date(self,date):
+    #     self.today = date
+    #     self.screen.get_screen('nda').ids.date_pick.text = str(self.today)
     
     def clear_sign(self):
         self.screen.get_screen('sign').ids.signature.canvas.clear()
         
 
-    # def send_otp(self):
-    #     self.Email = self.screen.get_screen('personal').ids.email_text.text
-    #     otp.generate_otp(self.Email)
+    def send_otp(self):
+        self.Email = self.screen.get_screen('personal').ids.email_text.text
+        gmail_otp.otp_protocol(self.Email)
 
 
     def finish(self):
         close = MDFlatButton(text='CLOSE',on_release=self.close)
         try_again = MDFlatButton(text='TRY AGAIN',on_release=self.close)
-        #self.over= self.screen.get_screen('sign').ids.finish
+        # Unable to access the count variable here to include it in if statement
         
-        if self.screen.get_screen('sign').ids.signature.canvas == None:
+        if Sign.children == None:
             self.dialog = MDDialog(title='NO Signature',text='Please provide signature before clicking on Finish',
                                    size_hint= (0.7,1), buttons=[close,try_again])
             self.dialog.open()
